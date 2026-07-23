@@ -1,0 +1,6 @@
+{
+  "name": "LouvorLink",
+  "description": "Organize os louvores dos cultos da sua igreja de forma simples e rápida.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

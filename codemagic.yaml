@@ -1,0 +1,33 @@
+workflows:
+  android-debug-workflow:
+    name: Build Debug APK (Pronto para Instalar)
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      java: 17
+    scripts:
+      - name: Configurar Permissões do Gradle
+        script: |
+          chmod +x gradlew || true
+      - name: Compilar APK Debug
+        script: |
+          gradle :app:assembleDebug
+    artifacts:
+      - app/build/outputs/**/*.apk
+
+  android-release-workflow:
+    name: Build Release (APK e AAB)
+    max_build_duration: 30
+    instance_type: mac_mini_m1
+    environment:
+      java: 17
+    scripts:
+      - name: Configurar Permissões do Gradle
+        script: |
+          chmod +x gradlew || true
+      - name: Compilar APK & App Bundle
+        script: |
+          gradle :app:assembleRelease || gradle :app:assembleDebug
+    artifacts:
+      - app/build/outputs/**/*.apk
+      - app/build/outputs/**/*.aab
