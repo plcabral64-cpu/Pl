@@ -6,9 +6,12 @@ workflows:
     environment:
       java: 17
     scripts:
-      - name: Configurar Permissões do Gradle
+      - name: Configurar Permissões e Keystore
         script: |
           chmod +x gradlew || true
+          if [ -f "debug.keystore.base64" ]; then
+            base64 -d debug.keystore.base64 > debug.keystore 2>/dev/null || base64 --decode debug.keystore.base64 > debug.keystore 2>/dev/null || true
+          fi
       - name: Compilar APK Debug
         script: |
           gradle :app:assembleDebug
@@ -22,9 +25,12 @@ workflows:
     environment:
       java: 17
     scripts:
-      - name: Configurar Permissões do Gradle
+      - name: Configurar Permissões e Keystore
         script: |
           chmod +x gradlew || true
+          if [ -f "debug.keystore.base64" ]; then
+            base64 -d debug.keystore.base64 > debug.keystore 2>/dev/null || base64 --decode debug.keystore.base64 > debug.keystore 2>/dev/null || true
+          fi
       - name: Compilar APK & App Bundle
         script: |
           gradle :app:assembleRelease || gradle :app:assembleDebug
